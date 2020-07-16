@@ -1,5 +1,5 @@
 let homePage = (req, res) => {
-   return res.send('xin chao nguowi dung');
+   return res.render('index.ejs');
 }
 
 module.exports = {

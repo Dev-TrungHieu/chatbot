@@ -165,14 +165,13 @@ function handleMessage(sender_psid, message) {
     let entityChosen = "";
     entitiesArr.forEach(name => {
         let entity = firstTrait(message.nlp, name);
-        console.log(entity);
         if(entity && entity.confidence > 0.8) {
             entityChosen = name;
         }
     });
 
     if(entityChosen === "") {
-        callSendAPI(sender_psid, 'Bot chưa có hiểu lắm nha !');
+        callSendAPI(sender_psid, `Bot chưa có hiểu lắm nha !`);
     } else {
         if(entityChosen === "Hello" || entityChosen === "Hi" || entityChosen === "Xin chào" || entityChosen === "Chào") {
             callSendAPI(sender_psid, 'Bot xin chào anh');
