@@ -57,52 +57,6 @@ let getWebHook = (req, res) => {
     }
 };
 
-// Handles messages events
-// function handleMessage(sender_psid, received_message) {
-//     let response;
-
-//     // Check if the message contains text
-//     if (received_message.text) {
-
-//         // Create the payload for a basic text message
-//         response = {
-//             "text": `You sent the message: "${received_message.text}". Now send me an image!`
-//         }
-//     } else if (received_message.attachments) {
-
-//         // Gets the URL of the message attachment
-//         let attachment_url = received_message.attachments[0].payload.url;
-//         response = {
-//             "attachment": {
-//               "type": "template",
-//               "payload": {
-//                 "template_type": "generic",
-//                 "elements": [{
-//                   "title": "Is this the right picture?",
-//                   "subtitle": "Tap a button to answer.",
-//                   "image_url": attachment_url,
-//                   "buttons": [
-//                     {
-//                       "type": "postback",
-//                       "title": "Yes!",
-//                       "payload": "yes",
-//                     },
-//                     {
-//                       "type": "postback",
-//                       "title": "No!",
-//                       "payload": "no",
-//                     }
-//                   ],
-//                 }]
-//               }
-//             }
-//           }
-
-//     }
-//     // Sends the response message
-//     callSendAPI(sender_psid, response);
-// }
-
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
     let response;
@@ -127,7 +81,8 @@ function callSendAPI(sender_psid, response) {
         "recipient": {
             "id": sender_psid
         },
-        "message": {"text": response}
+        // "message": { "text": response }
+        "message": response
     }
 
     // Send the HTTP request to the Messenger Platform
@@ -146,41 +101,82 @@ function callSendAPI(sender_psid, response) {
     });
 }
 
-function firstTrait(nlp, name) {
-    return nlp && nlp.entities && nlp.traits[name] && nlp.traits[name][0];
-}
+// function firstTrait(nlp, name) {
+//     return nlp && nlp.entities && nlp.traits[name] && nlp.traits[name][0];
+// }
 
-function handleMessage(sender_psid, message) {
-    // check greeting is here and is confident
-    let entitiesArr = [
-        "Xin chào",
-        "Hello",
-        "Hi",
-        "Chào",
-        "Bye",
-        "Tạm biệt",
-        "Good bye"
-    ];
-
-    let entityChosen = "";
-    entitiesArr.forEach(name => {
-        let entity = firstTrait(message.nlp, name);
-        if(entity && entity.confidence > 0.8) {
-            entityChosen = name;
+function handleMessage(sender_psid, received_message) {
+    let response;
+    // Check if the message contains text
+    if (received_message.text) {
+        // Create the payload for a basic text message
+        response = {
+            "text": `You sent the message: "${received_message.text}"`
         }
-    });
-
-    if(entityChosen === "") {
-        callSendAPI(sender_psid, `Bot chưa có hiểu lắm nha !`);
-    } else {
-        if(entityChosen === "Hello" || entityChosen === "Hi" || entityChosen === "Xin chào" || entityChosen === "Chào") {
-            callSendAPI(sender_psid, 'Bot xin chào anh');
-        }
-        if(entityChosen === "Bye" || entityChosen === "Tạm biệt" || entityChosen === "Good bye") {
-            callSendAPI(sender_psid, 'Bot tạm biệt anh https://i.pinimg.com/originals/49/25/76/4925763b5530a8a26fa392c21845cde1.jpg');
-        }
+    } else if (received_message.attachments) {
+        // Gets the URL of the message attachment
+        let attachment_url = received_message.attachments[0].payload.url;
+        response = {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": [{
+                  "title": "Is this the right picture?",
+                  "subtitle": "Tap a button to answer.",
+                  "image_url": attachment_url,
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Yes!",
+                      "payload": "yes",
+                    },
+                    {
+                      "type": "postback",
+                      "title": "No!",
+                      "payload": "no",
+                    }
+                  ],
+                }]
+              }
+            }
+          }
     }
+    // Sends the response message
+    callSendAPI(sender_psid, response);
 }
+
+// function handleMessage(sender_psid, message) {
+//     // check greeting is here and is confident
+//     let entitiesArr = [
+//         "Xin chào",
+//         "Hello",
+//         "Hi",
+//         "Chào",
+//         "Bye",
+//         "Tạm biệt",
+//         "Good bye"
+//     ];
+
+//     let entityChosen = "";
+//     entitiesArr.forEach(name => {
+//         let entity = firstTrait(message.nlp, name);
+//         if(entity && entity.confidence > 0.8) {
+//             entityChosen = name;
+//         }
+//     });
+
+//     if(entityChosen === "") {
+//         callSendAPI(sender_psid, `Bot chưa có hiểu lắm nha !`);
+//     } else {
+//         if(entityChosen === "Hello" || entityChosen === "Hi" || entityChosen === "Xin chào" || entityChosen === "Chào") {
+//             callSendAPI(sender_psid, 'Bot xin chào anh');
+//         }
+//         if(entityChosen === "Bye" || entityChosen === "Tạm biệt" || entityChosen === "Good bye") {
+//             callSendAPI(sender_psid, 'Bot tạm biệt anh https://i.pinimg.com/originals/49/25/76/4925763b5530a8a26fa392c21845cde1.jpg');
+//         }
+//     }
+// }
 
 module.exports = {
     postWebHook: postWebHook,

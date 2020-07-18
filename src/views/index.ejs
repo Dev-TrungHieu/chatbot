@@ -1,34 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>xin chao m.n den voi chatbot</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="div_d">
+        <div class="change_theme">
+          <span class="dark_mode">Dark</span>
+          <span class="light_mode">Light</span>
+        </div>
+      </div>
+      <div class="div_d">
+        <a href="#">
+          <span class="name_logo">Trung Hieu</span>
+        </a>
+        <!-- <i class="fa fa-dot-circle-o" aria-hidden="true"></i> -->
+      </div>
+      <div class="div_d">
+        <div class="scroll_alert">
+          <marquee behavior="" direction="right" scrolldelay="250">
+            Scroll
+          </marquee>
+        </div>
+      </div>
+      <div class="div_d">
+        <div class="detail_content">
+          <div class="counter"></div>
+          <div class="detail">
+            <div class="name">The shapes</div>
+            <div class="time">0b/1z/I999</div>
+          </div>
+        </div>
+      </div>
+      <div class="div_d show">
+        <div class="info_singer">
+          <div class="item item-1"></div>
+          <div class="item item-2"></div>
+          <div class="item item-3"></div>
+          <div class="item item-4"></div>
+          <div class="item item-5"></div>
+          <div class="item item-6"></div>
+          <div class="item item-7"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Load Facebook SDK for JavaScript -->
     <div id="fb-root"></div>
     <script>
-      window.fbAsyncInit = function() {
+      window.fbAsyncInit = function () {
         FB.init({
-          xfbml            : true,
-          version          : 'v7.0'
+          xfbml: true,
+          version: "v7.0",
         });
       };
 
-      (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        console.log(js);
+        js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
 
     <!-- Your Chat Plugin code -->
-    <div class="fb-customerchat"
-      attribution=setup_tool
-      page_id="114433503676875">
-    </div>
-</body>
+    <div
+      class="fb-customerchat"
+      attribution="setup_tool"
+      page_id="114433503676875"
+    ></div>
+
+    <script src="./javascript/handle.js"></script>
+  </body>
 </html>
